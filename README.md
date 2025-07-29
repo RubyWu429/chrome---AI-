@@ -120,7 +120,7 @@ ai-product-manager-assistant/
 
 如有问题或建议，请通过以下方式联系：
 - 提交GitHub Issue
-- 发送邮件至：[你的邮箱]
+- 发送邮件至：[wyxnju33@163.com]
 
 ---
 
