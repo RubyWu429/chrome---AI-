@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AI摘要助手</title>
+  <style>
+    body {
+      width: 300px;
+      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      margin: 0;
+    }
+    
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+    }
+    
+    h1 {
+      margin: 0 0 20px 0;
+      font-size: 18px;
+      text-align: center;
+      color: white;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    
+    input[type="text"]:focus {
+      outline: none;
+      background: white;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+    }
+    
+    button {
+      width: 100%;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+    
+    .status {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      text-align: center;
+    }
+    
+    .status.success {
+      background: rgba(76, 175, 80, 0.3);
+      border: 1px solid rgba(76, 175, 80, 0.5);
+    }
+    
+    .status.error {
+      background: rgba(244, 67, 54, 0.3);
+      border: 1px solid rgba(244, 67, 54, 0.5);
+    }
+    
+    .instructions {
+      margin-top: 20px;
+      font-size: 12px;
+      line-height: 1.4;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .instructions h3 {
+      margin: 0 0 10px 0;
+      font-size: 14px;
+      color: white;
+    }
+    
+    .instructions ol {
+      margin: 0;
+      padding-left: 20px;
+    }
+    
+    .instructions li {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🤖 AI摘要助手</h1>
+    
+    <div class="form-group">
+      <label for="apiKey">DeepSeek API密钥:</label>
+      <input type="text" id="apiKey" placeholder="请输入你的DeepSeek API密钥">
+    </div>
+    
+    <div class="form-group">
+      <label for="feishuAppId">飞书应用App ID:</label>
+      <input type="text" id="feishuAppId" placeholder="请输入飞书应用的App ID">
+    </div>
+    
+    <div class="form-group">
+      <label for="feishuAppSecret">飞书应用App Secret:</label>
+      <input type="text" id="feishuAppSecret" placeholder="请输入飞书应用的App Secret">
+    </div>
+    
+    <button id="saveBtn">保存设置</button>
+    <button id="testBtn" style="margin-top: 10px; background: rgba(255, 255, 255, 0.15);">测试飞书连接</button>
+    
+    <div id="status" class="status" style="display: none;"></div>
+    
+    <div class="instructions">
+      <h3>使用说明:</h3>
+      <ol>
+        <li>在任意网页上选择要摘要的文本</li>
+        <li>右键点击选中的文本</li>
+        <li>选择"自动摘要并添加到飞书文档"</li>
+        <li>等待AI生成摘要并自动添加到飞书表格</li>
+      </ol>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html> 
