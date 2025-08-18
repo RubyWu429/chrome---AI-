@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AI摘要助手</title>
+  <style>
+    body {
+      width: 350px;
+      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      margin: 0;
+    }
+    
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+    }
+    
+    h1 {
+      margin: 0 0 20px 0;
+      font-size: 18px;
+      text-align: center;
+      color: white;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    
+    input[type="text"], select {
+      width: 100%;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    
+    input[type="text"]:focus, select:focus {
+      outline: none;
+      background: white;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+    }
+    
+    .radio-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 5px;
+    }
+    
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .radio-option input[type="radio"] {
+      width: auto;
+      margin: 0;
+    }
+    
+    .radio-option label {
+      margin: 0;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    
+    button {
+      width: 100%;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+    
+    .status {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      text-align: center;
+    }
+    
+    .status.success {
+      background: rgba(76, 175, 80, 0.3);
+      border: 1px solid rgba(76, 175, 80, 0.5);
+    }
+    
+    .status.error {
+      background: rgba(244, 67, 54, 0.3);
+      border: 1px solid rgba(244, 67, 54, 0.5);
+    }
+    
+    .instructions {
+      margin-top: 20px;
+      font-size: 12px;
+      line-height: 1.4;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .instructions h3 {
+      margin: 0 0 10px 0;
+      font-size: 14px;
+      color: white;
+    }
+    
+    .instructions ol {
+      margin: 0;
+      padding-left: 20px;
+    }
+    
+    .instructions li {
+      margin-bottom: 5px;
+    }
+    
+    .template-section {
+      margin-top: 15px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .template-section h4 {
+      margin: 0 0 10px 0;
+      font-size: 14px;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🤖 AI摘要助手</h1>
+    
+    <div class="form-group">
+      <label for="apiKey">DeepSeek API密钥:</label>
+      <input type="text" id="apiKey" placeholder="请输入你的DeepSeek API密钥">
+    </div>
+    
+    <div class="form-group">
+      <label for="feishuAppId">飞书应用App ID:</label>
+      <input type="text" id="feishuAppId" placeholder="请输入飞书应用的App ID">
+    </div>
+    
+    <div class="form-group">
+      <label for="feishuAppSecret">飞书应用App Secret:</label>
+      <input type="text" id="feishuAppSecret" placeholder="请输入飞书应用的App Secret">
+    </div>
+    
+    <div class="form-group">
+      <label for="feishuTableUrl">飞书表格链接:</label>
+      <input type="url" id="feishuTableUrl" placeholder="请粘贴完整的飞书表格链接">
+      <small style="color: rgba(255,255,255,0.7); font-size: 11px; display: block; margin-top: 5px;">
+        支持多维表格、电子表格、知识库表格等，直接粘贴链接即可
+      </small>
+    </div>
+    
+    <div class="template-section">
+      <h4>📝 摘要模板选择:</h4>
+      <select id="templateSelect">
+        <option value="通用模板">通用模板</option>
+        <option value="Claude CEO框架">Claude CEO框架</option>
+        <option value="Anthropic CPO框架">Anthropic CPO框架</option>
+        <option value="Peter Deng框架">Peter Deng框架</option>
+      </select>
+    </div>
+    
+    <button id="saveBtn">保存设置</button>
+    <button id="testBtn" style="margin-top: 10px; background: rgba(255, 255, 255, 0.15);">测试飞书连接</button>
+    
+    <div id="status" class="status" style="display: none;"></div>
+    
+    <div class="instructions">
+      <h3>使用说明:</h3>
+      <ol>
+        <li>在任意网页上选择要摘要的文本</li>
+        <li>右键点击选中的文本</li>
+        <li>选择"自动摘要并添加到飞书文档"</li>
+        <li>等待AI生成摘要并自动添加到飞书表格</li>
+      </ol>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html> 

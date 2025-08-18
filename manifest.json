@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "AI摘要助手 - 飞书文档",
+  "version": "2.0",
+  "description": "自动摘要网页内容并添加到飞书文档，支持文章自动归类",
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "storage",
+    "notifications",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://au3r81yqpl.feishu.cn/*",
+    "https://api.deepseek.com/*",
+    "https://open.feishu.cn/*"
+  ],
+  "background": {
+    "service_worker": "background-enhanced.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "AI摘要助手"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
